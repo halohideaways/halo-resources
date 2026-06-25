@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Airbnb Algorithm Health Checklist — Halo Hideaways</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sand: #E8E0D4;
+    --sand-mid: #D4C9B8;
+    --sand-dark: #B8A898;
+    --ink: #2A2420;
+    --ink-mid: #5C4F45;
+    --ink-light: #8C7E74;
+    --warm-white: #F5F0E8;
+    --accent: #7A6552;
+    --accent-hover: #5C4B3A;
+    --section-1: #EDE5D8;
+    --section-2: #E2EAE6;
+    --section-3: #EDE0E8;
+    --section-4: #E0E5EE;
+    --section-5: #EDE8D8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--sand);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .progress-pill {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    background: var(--sand);
+    border-radius: 20px;
+    padding: 4px 12px;
+    letter-spacing: 0.02em;
+  }
+  .nav-link {
+    font-size: 13px;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4rem;
+    border-bottom: 1px solid var(--sand);
+  }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 6vw, 58px);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    max-width: 560px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-body {
+    font-size: 16px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--ink-light);
+    letter-spacing: 0.04em;
+  }
+
+  /* PROGRESS BAR */
+  .progress-section {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 2rem 0;
+  }
+  .progress-track {
+    height: 3px;
+    background: var(--sand);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .progress-text {
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+  .reset-btn {
+    font-size: 12px;
+    color: var(--ink-light);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+  }
+  .reset-btn:hover { color: var(--ink); }
+
+  /* CHECKLIST */
+  .checklist {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 2rem 6rem;
+  }
+
+  .section-block {
+    margin-bottom: 3rem;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--sand);
+  }
+  .section-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+  .tag-1 { background: var(--section-1); color: #5C4A2A; }
+  .tag-2 { background: var(--section-2); color: #2A4C3A; }
+  .tag-3 { background: var(--section-3); color: #4A2A40; }
+  .tag-4 { background: var(--section-4); color: #2A3A5C; }
+  .tag-5 { background: var(--section-5); color: #5C4A2A; }
+
+  .section-desc {
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-left: auto;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid rgba(184, 168, 152, 0.3);
+    cursor: pointer;
+    transition: background 0.15s;
+    border-radius: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-item:hover { background: rgba(122, 101, 82, 0.04); }
+
+  .cb {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--sand-dark);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+    position: relative;
+  }
+  .cb.done {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .cb.done::after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 9px;
+    border: 2px solid #fff;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg) translateY(-1px);
+  }
+
+  .item-text {
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.5;
+    flex: 1;
+    transition: color 0.2s;
+  }
+  .item-text.done {
+    color: var(--ink-light);
+    text-decoration: line-through;
+    text-decoration-color: var(--sand-dark);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--sand);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .footer-inner { max-width: 760px; margin: 0 auto; }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--warm-white);
+    margin-bottom: 0.5rem;
+  }
+  .footer-tagline {
+    font-size: 13px;
+    color: var(--sand-dark);
+    margin-bottom: 1.5rem;
+  }
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-size: 13px;
+    color: var(--sand-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--warm-white); }
+  .footer-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    margin: 1.5rem auto;
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: var(--ink-light);
+    margin-top: 1.5rem;
+  }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    nav { padding: 0 1.25rem; }
+    .hero { padding: 3.5rem 1.25rem 3rem; }
+    .progress-section { padding: 1.5rem 1.25rem 0; }
+    .checklist { padding: 1.5rem 1.25rem 5rem; }
+    .hero-stats { gap: 1.5rem; }
+    .section-desc { display: none; }
+    footer { padding: 2.5rem 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-brand">Halo Hideaways</a>
+  <div class="nav-right">
+    <span class="progress-pill" id="nav-progress">0 / 23 done</span>
+    <a href="https://beacons.ai/halohideaways" class="nav-link" target="_blank">Get managed ↗</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <p class="eyebrow">Free resource &nbsp;·&nbsp; Halo Hideaways</p>
+  <h1>Your Airbnb<br>algorithm <em>health</em><br>checklist</h1>
+  <p class="hero-body">Most hosts focus only on reviews. The algorithm goes much deeper — it's scoring your conversion rate, your 90-day trend, your response speed, your support ticket count, and your API sync health. Run through this checklist every quarter.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">2%</span>
+      <span class="stat-label">Minimum conversion rate</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">90</span>
+      <span class="stat-label">Days the algorithm measures</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">23</span>
+      <span class="stat-label">Items to check</span>
+    </div>
+  </div>
+</section>
+
+<div class="progress-section">
+  <div class="progress-track"><div class="progress-fill" id="pbar"></div></div>
+  <div class="progress-meta">
+    <span class="progress-text" id="progress-text">0 of 23 complete</span>
+    <button class="reset-btn" onclick="resetAll()">Reset</button>
+  </div>
+</div>
+
+<main class="checklist">
+
+  <div class="section-block">
+    <div class="section-label">
+      <span class="section-tag tag-1">Search visibility</span>
+      <span class="section-desc">4 items</span>
+    </div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">View-to-booking conversion rate is above 2% — check this in your listing stats dashboard</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">Listing price is competitive vs the local STR market — not in constant discount mode</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">90-day performance trend is on an incline, not declining or flat</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">Listing appears in the correct categories and search filters for your property type</div></div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-label">
+      <span class="section-tag tag-2">Listing quality</span>
+      <span class="section-desc">5 items</span>
+    </div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">Cover photo is the most compelling image — the algorithm tracks which photos guests dwell on longest</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">Photo order holds attention through the full gallery without drop-off</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">Description is complete with no missing fields, placeholder text, or outdated information</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">All amenity tags are fully filled in and accurate to what's actually in the property</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">Key details are easy to find — a guest shouldn't need to scroll far to understand what they're booking</div></div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-label">
+      <span class="section-tag tag-3">Host performance</span>
+      <span class="section-desc">5 items</span>
+    </div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">Message response time is consistently under 1 hour — this directly affects your search ranking</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">Guest questions are answered fully in the first reply — no follow-up needed to get basic info</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">All public review responses are factual and professional — future guests are the real audience</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">Support tickets are minimised — every ticket registers as a negative service signal in the algorithm, regardless of context</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">No unresolved escalations currently open with Airbnb support</div></div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-label">
+      <span class="section-tag tag-4">Review protection</span>
+      <span class="section-desc">5 items</span>
+    </div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">All guest communication is kept inside the native Airbnb chat — WhatsApp and SMS screenshots are dismissed by automated agents</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">Evidence for any damage claim gathered before filing — timestamped photos via Breezeway or Turno</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">Damage claims timed carefully — filing near the end of the 14-day review window leaves the guest no time to compose a retaliatory response</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">Any guest threat to leave a bad review in exchange for a refund is documented inside the native chat before you respond</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">A structured appeal template is ready to go — formal, factual, and referencing the Retaliatory Reviews & Bias policy</div></div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-label">
+      <span class="section-tag tag-5">PMS & API sync</span>
+      <span class="section-desc">4 items</span>
+    </div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">After every Airbnb platform update — major or minor — manually verify that metadata fields haven't been wiped</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">If using everything sync: confirm all listing details are pushing correctly from your PMS</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">If using pricing & availability sync only: text, amenity tags, and category markers are managed directly on Airbnb</div></div>
+    <div class="check-item" onclick="toggle(this)"><div class="cb"></div><div class="item-text">API sync health check is scheduled as a recurring calendar task — not something you only check when things break</div></div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Halo Hideaways</div>
+    <div class="footer-tagline">High-end Airbnb & short-term rental management</div>
+    <div class="footer-divider"></div>
+    <div class="footer-links">
+      <a href="https://beacons.ai/halohideaways" target="_blank">Work with us</a>
+      <a href="https://www.instagram.com/halohideaways" target="_blank">@halohideaways</a>
+    </div>
+    <div class="footer-copy">© 2025 Halo Hideaways. Free to share.</div>
+  </div>
+</footer>
+
+<script>
+  const items = document.querySelectorAll('.check-item');
+  const total = items.length;
+
+  function toggle(el) {
+    const cb = el.querySelector('.cb');
+    const text = el.querySelector('.item-text');
+    const isDone = cb.classList.toggle('done');
+    text.classList.toggle('done', isDone);
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const done = document.querySelectorAll('.cb.done').length;
+    const pct = (done / total * 100).toFixed(0);
+    document.getElementById('pbar').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = done + ' of ' + total + ' complete';
+    document.getElementById('nav-progress').textContent = done + ' / ' + total + ' done';
+  }
+
+  function resetAll() {
+    document.querySelectorAll('.cb.done').forEach(cb => cb.classList.remove('done'));
+    document.querySelectorAll('.item-text.done').forEach(t => t.classList.remove('done'));
+    updateProgress();
+  }
+</script>
+</body>
+</html>
